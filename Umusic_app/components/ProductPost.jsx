@@ -2,17 +2,20 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { getDatabase, ref, onValue } from 'firebase/database'
 import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const ProductPost = ({ item }) => {
 
   const db = getDatabase();
+  const navigation = useNavigation()
 
-  
-    
- 
+  const handlePress = ( id ) => {
+    navigation.navigate('ProductPage', { id } )
+  }
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(item.id)}>
         <Text style={styles.text}>{item.name}</Text>
         <Text style={styles.text}>{item.description}</Text>
         <Text style={styles.text}>{item.price}</Text>
