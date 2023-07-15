@@ -74,6 +74,12 @@ useEffect(()=>{
                 <Text style={styles.profileText}>{userData?.username}</Text>
             </View>
         </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.button}
+        onPress={handleSignOut}
+      >
+        <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
         <FlatList
             data={dataPost}
             renderItem={({ item }) => {
@@ -90,7 +96,6 @@ useEffect(()=>{
             style={styles.postList}
         />
 
-
       <TouchableOpacity
         style={styles.button}
         onPress={getProductData}
@@ -99,9 +104,9 @@ useEffect(()=>{
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={handleSignOut}
+        onPress={() => {navigation.navigate('MyProducts')}}
       >
-        <Text style={styles.buttonText}>Sign Out</Text>
+        <Text style={styles.buttonText}>My Products</Text>
       </TouchableOpacity>
     </View> 
   )
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 10
     },
     buttonText: {
         color: 'white',

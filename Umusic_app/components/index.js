@@ -1,4 +1,5 @@
 import ProductPost from './ProductPost';
+import ProductTransaction from './ProductTransaction';
 
 
-export {ProductPost};
+export {ProductPost, ProductTransaction};
