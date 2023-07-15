@@ -9,7 +9,7 @@ import { getAuth } from 'firebase/auth'
 const ProductScreen = () => {
 
     const [data, setData] = useState({});
-    const [Id, setId] = useState('');
+    const [Id, setId] = useState(1);
 
     const route = useRoute()
     const { id } = route.params;
@@ -30,6 +30,10 @@ const ProductScreen = () => {
       const transactions = ref(db, `transaction/${auth.currentUser.uid}/`)
       onValue(transactions, (snapshot) => {
         const data = snapshot.val();
+        console.log('Here',data)
+        if (data === null){
+          return
+        }
         setId(data.length);
       })
     }
@@ -39,7 +43,7 @@ const ProductScreen = () => {
         date: new Date().toJSON().slice(0, 10),
         price: data.price,
         product_id: data.id,
-        quantity: 1
+        quantity: 1 
       }
 
       const updates = {};

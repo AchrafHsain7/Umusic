@@ -22,6 +22,9 @@ const MyProductsScreen = () => {
 
     const getMyProducts = () => {
         const products = []
+        if(transactionData === null){
+            return null;
+        }
         transactionData.forEach((item) => {
             console.log('Item:', item)
             const product = ref(db, `product/${item.product_id}/`);
@@ -52,19 +55,21 @@ const MyProductsScreen = () => {
             if(item === undefined){
                 return null;
             }
-            if(productsData === undefined){
-                return null;
-            }
             let productToSend = {}
-            productsData.forEach((product) => {
-                if(product.id === item.product_id){
-                    productToSend = product;
-                    console.log('----------------------match-----------');
-                }
-            })
-            return(
-                <ProductTransaction  item={item} productsData={productToSend} />
-            )
+            try{
+                productsData.forEach((product) => {
+                    if(product.id === item.product_id){
+                        productToSend = product;
+                        console.log('----------------------match-----------');
+                    }
+                })
+                return(
+                    <ProductTransaction  item={item} productsData={productToSend} />
+                )
+            } catch(error) {
+                return <Text>Sorry, you didnt buy any products yet!</Text>
+            }
+            
         }}
         
         contentContainerStyle={{columnGap: 10}}
