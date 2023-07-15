@@ -10,6 +10,7 @@ const ProductScreen = () => {
 
     const [data, setData] = useState({});
     const [Id, setId] = useState(1);
+    const [quantity, setQuantity] = useState(0);
 
     const route = useRoute()
     const { id } = route.params;
@@ -41,9 +42,9 @@ const ProductScreen = () => {
     const buyProduct = () => {
       const transaction = {
         date: new Date().toJSON().slice(0, 10),
-        price: data.price,
+        price: data.price * quantity,
         product_id: data.id,
-        quantity: 1 
+        quantity: quantity
       }
 
       const updates = {};
@@ -77,6 +78,29 @@ const ProductScreen = () => {
       >
         <Text>Buy</Text>
       </TouchableOpacity>
+      <View>
+        <TouchableOpacity onPress={() => {
+          if(quantity < data.quantity){
+              setQuantity(quantity+1)
+          }
+          }}
+          style={styles.button}
+          >
+            <Text>+</Text>
+          </TouchableOpacity>
+        <Text style={{textAlign:'center', margin:10}}>{quantity}</Text>
+        <TouchableOpacity 
+        onPress={() => {
+          if(quantity >= 1){
+            setQuantity(quantity-1)
+            }
+          }}
+          style={styles.button}
+          
+          >
+          <Text>-</Text>
+          </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -99,7 +123,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         borderWidth: 1,
         borderRadius: 10,
-        marginTop: 40,
+        marginTop: 20,
     }
 
 })

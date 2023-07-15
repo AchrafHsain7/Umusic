@@ -3,15 +3,19 @@ import React, { useEffect, useState } from 'react'
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
 import { ProductPost, ProductTransaction } from '../components'
+import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const MyProductsScreen = () => {
 
     const db = getDatabase()
     const auth = getAuth()
+    const navigation = useNavigation()
     const [transactionData, setTransactionData] = useState([])
     const [productsData, setProductsData] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0)
 
-    const getMyTransactions = () => {
+    const getMyTransactions = async () => {
         const products = ref(db, `transaction/${auth.currentUser.uid}/`);
         onValue(products, (snapshot) => {
             const data_p = snapshot.val();
@@ -36,13 +40,29 @@ const MyProductsScreen = () => {
         setProductsData(products);
         console.log('Data: ', productsData)
         }
+
+    const calculateTotalPrice = () => {
+        let total = 0
+        transactionData.forEach((item) => {
+            total += item.price
+        })
+        setTotalPrice(total)
+    }
+
+
+    const buyProduct = () => {
+    }
     
 
 
     useEffect(() => {
-        getMyTransactions();
-        getMyProducts();
-    }, [2])
+        getMyTransactions()
+        .then(() => calculateTotalPrice())
+        .then(() => getMyProducts())
+        
+    }, [])  
+
+
 
 
   return (
@@ -60,7 +80,7 @@ const MyProductsScreen = () => {
                 productsData.forEach((product) => {
                     if(product.id === item.product_id){
                         productToSend = product;
-                        console.log('----------------------match-----------');
+                        //console.log('----------------------match-----------'); 
                     }
                 })
                 return(
@@ -75,6 +95,16 @@ const MyProductsScreen = () => {
         contentContainerStyle={{columnGap: 10}}
         showsVerticalScrollIndicator={false}
         />
+        <TouchableOpacity 
+            style={styles.button}
+            onPress={() => {
+                calculateTotalPrice()
+            }}
+            >
+            <Text>Buy</Text>
+        </TouchableOpacity>
+        <Text>Total Price: {totalPrice} DH</Text>
+        
     </View>
   )
 }
@@ -88,7 +118,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     postList: {
-        marginTop: 50
+        marginTop: 50,
+        flex: 0.5,
+        marginBottom: 20
     },
+    button : {
+        borderWidth: 1,
+        marginBottom: 20,
+        padding: 10,
+        width: "60%",
+        backgroundColor: 'red'
+    }
 
 })

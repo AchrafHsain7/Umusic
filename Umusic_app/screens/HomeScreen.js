@@ -88,7 +88,7 @@ useEffect(()=>{
                 }
                 return(
                     <ProductPost  item={item} />
-                ) 
+                )  
             }}
             
             contentContainerStyle={{columnGap: 10}}
@@ -104,7 +104,7 @@ useEffect(()=>{
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {navigation.navigate('MyProducts')}}
+        onPress={() => {navigation.navigate('MyProducts')}} 
       >
         <Text style={styles.buttonText}>My Products</Text>
       </TouchableOpacity>
