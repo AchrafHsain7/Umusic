@@ -1,27 +1,58 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useRoute } from '@react-navigation/native'
-import { getDatabase, onValue, ref } from 'firebase/database'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { getDatabase, onValue, ref, update } from 'firebase/database'
 import { TouchableOpacity } from 'react-native'
+import { auth } from '../firebase'
+import { getAuth } from 'firebase/auth'
 
 const ProductScreen = () => {
 
     const [data, setData] = useState({});
+    const [Id, setId] = useState('');
 
     const route = useRoute()
     const { id } = route.params;
     const db = getDatabase();
+    const auth = getAuth();
+    const navigation = useNavigation();
+
     const getProduct = () => {
         const product = ref(db, `product/${id}/`);
         onValue(product, (snapshot) => {
             const product_data = snapshot.val();
             setData(product_data); 
-            console.log(data);
+            //console.log(data);
         })
+    }
+
+    const getID = () =>{
+      const transactions = ref(db, `transaction/${auth.currentUser.uid}/`)
+      onValue(transactions, (snapshot) => {
+        const data = snapshot.val();
+        setId(data.length);
+      })
+    }
+
+    const buyProduct = () => {
+      const transaction = {
+        date: new Date().toJSON().slice(0, 10),
+        price: data.price,
+        product_id: data.id,
+        quantity: 1
+      }
+
+      const updates = {};
+      const ID = getID();
+      console.log('ID', ID);
+      updates[`transaction/${auth.currentUser.uid}/${Id}/`] = transaction
+
+      return update(ref(db), updates)
     }
 
     useEffect(() => {
         getProduct();
+        getID();
     }, [])
 
   return (
@@ -33,7 +64,13 @@ const ProductScreen = () => {
       <Text>Price: {data.price}</Text>
       <Text>Available Quantity: {data.quantity}</Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={() => {
+          buyProduct();
+          navigation.navigate('MyProducts')
+        }}
+      >
         <Text>Buy</Text>
       </TouchableOpacity>
     </View>

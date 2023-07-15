@@ -44,11 +44,15 @@ const MyProductsScreen = () => {
 
   return (
     <View style={styles.container} >
-      <Text>MyProductsScreen</Text>
+      <Text style={{marginTop: 50}}>MyProductsScreen</Text>
       <FlatList
         data={transactionData}
+        style={styles.postList}
         renderItem={({ item }) => {
             if(item === undefined){
+                return null;
+            }
+            if(productsData === undefined){
                 return null;
             }
             let productToSend = {}
@@ -65,7 +69,6 @@ const MyProductsScreen = () => {
         
         contentContainerStyle={{columnGap: 10}}
         showsVerticalScrollIndicator={false}
-        style={styles.postList}
         />
     </View>
   )
@@ -82,4 +85,5 @@ const styles = StyleSheet.create({
     postList: {
         marginTop: 50
     },
+
 })

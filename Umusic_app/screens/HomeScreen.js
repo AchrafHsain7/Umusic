@@ -88,7 +88,7 @@ useEffect(()=>{
                 }
                 return(
                     <ProductPost  item={item} />
-                )
+                ) 
             }}
             
             contentContainerStyle={{columnGap: 10}}
