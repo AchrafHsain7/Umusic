@@ -15,6 +15,7 @@ const HomeScreen = () => {
 
     const [dataPost, setdataPost] = useState([]);
     const [userData, setUserData] = useState();
+    const [searchOption, setSearchOption] = useState('');
 
 
 
@@ -36,7 +37,17 @@ const HomeScreen = () => {
         const products = ref(db, 'product/');
         onValue(products, (snapshot) => {
         const data = snapshot.val();
-        setdataPost(data);
+        if(searchOption === ''){
+            setdataPost(data);
+        } else {
+            const searchData = []
+            data.forEach((item) => {
+                if(item.type === searchOption){
+                    searchData.push(item)
+                }
+            })
+            setdataPost(searchData);
+        }
         console.log(dataPost);
         })}
 
@@ -63,6 +74,11 @@ useEffect(()=>{
     getProductData();
     getUserData();
 }, [])
+
+useEffect(() => {
+    getProductData();
+    console.log(searchOption)
+}, [searchOption])
    
 
 
@@ -80,6 +96,23 @@ useEffect(()=>{
       >
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
+
+      <ScrollView horizontal style={styles.optionsContainer} showsHorizontalScrollIndicator={false}>
+        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('piano')}>
+            <Text>Piano</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('guitar')}>
+            <Text>Guitar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('trumpet')}>
+            <Text>Trumpet</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('')}>
+            <Text>All Items</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+
         <FlatList
             data={dataPost}
             renderItem={({ item }) => {
@@ -156,5 +189,18 @@ const styles = StyleSheet.create({
     profileText: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        height: 150,
+        marginBottom: 10
+    }, 
+    optionButtons: {
+        margin: 5,
+        padding: 10,
+        width: 100, 
+        height: 60,
+        borderRadius: 10, 
+        borderWidth: 1
     }
 })
