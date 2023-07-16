@@ -104,7 +104,7 @@ const MyProductsScreen = () => {
                 calculateTotalPrice()
             }}
             >
-            <Text>Buy</Text>
+            <Text>Generate Total Price</Text> 
         </TouchableOpacity>
         <Text>Total Price: {totalPrice} DH</Text>
         

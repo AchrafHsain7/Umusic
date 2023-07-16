@@ -8,7 +8,7 @@ import { getAuth } from 'firebase/auth'
 import { ScrollView } from 'react-native'
 import { TextInput } from 'react-native'
 import { FlatList } from 'react-native'
-import { Comment } from '../components'
+import { Comment, BuyingArea } from '../components'
 
 const ProductScreen = () => {
 
@@ -69,10 +69,16 @@ const ProductScreen = () => {
         quantity: quantity
       }
 
+
       const updates = {};
       const ID = getID();
       //console.log('ID', ID);
-      updates[`transaction/${auth.currentUser.uid}/${Id}/`] = transaction
+      if (data.quantity - quantity >=0){
+        updates[`transaction/${auth.currentUser.uid}/${Id}/`] = transaction
+        updates[`product/${id}/quantity`] = data.quantity - quantity;
+      }
+
+      setQuantity(0)
 
       return update(ref(db), updates)
     }
@@ -88,8 +94,10 @@ const ProductScreen = () => {
         }
 
         const updates = {}; 
-        updates[`product/${data.id}/comments/${auth.currentUser.uid}/`] = commentData;
-        update(ref(db), updates); 
+        if(comment != ''){
+          updates[`product/${data.id}/comments/${auth.currentUser.uid}/`] = commentData;
+          update(ref(db), updates); 
+        }
     }
 
 
@@ -112,38 +120,8 @@ const ProductScreen = () => {
     <ScrollView style={styles.scrollArea}>
       <View style={styles.scrollAreaContent}>
 
-    <TouchableOpacity 
-        style={styles.button}
-        onPress={() => {
-          buyProduct();
-          navigation.navigate('MyProducts')
-        }}
-      >
-        <Text>Buy</Text>
-      </TouchableOpacity>
-      <View>
-        <TouchableOpacity onPress={() => {
-          if(quantity < data.quantity){
-              setQuantity(quantity+1)
-          }
-          }}
-          style={styles.button}
-          >
-            <Text>+</Text>
-          </TouchableOpacity>
-        <Text style={{textAlign:'center', margin:10}}>{quantity}</Text>
-        <TouchableOpacity 
-        onPress={() => {
-          if(quantity >= 1){
-            setQuantity(quantity-1)
-            }
-          }}
-          style={styles.button}
-          
-          >
-          <Text>-</Text>
-          </TouchableOpacity>
-      </View>
+    
+      <BuyingArea quantity={quantity} setQuantity={setQuantity} data={data} buyProduct={buyProduct} /> 
       
         <Text>Comments: </Text>
         <TextInput placeholder='Comment:' style={styles.commentInput}
@@ -159,7 +137,6 @@ const ProductScreen = () => {
         <FlatList
         data={commentData} 
         renderItem={({ item }) => {
-          console.log('Added')
           return(
             <Comment item={item}  /> 
           )
