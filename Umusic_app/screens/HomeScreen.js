@@ -84,7 +84,7 @@ useEffect(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.profileContainer}>
+        <TouchableOpacity style={styles.profileContainer} onPress={() => navigation.navigate('MyProfile')}>
             <Image source={{uri: userData?.image}} style={styles.profileImage} ></Image>
             <View style={styles.profileTextContainer}>
                 <Text style={styles.profileText}>{userData?.username}</Text>
