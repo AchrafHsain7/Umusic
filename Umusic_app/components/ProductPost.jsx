@@ -17,10 +17,9 @@ const ProductPost = ({ item }) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(item.id)}>
         <Text style={styles.text}>{item.name}</Text>
-        <Text style={styles.text}>{item.description}</Text>
-        <Text style={styles.text}>{item.price}</Text>
-        <Text style={styles.text}>{item.brand}</Text>
-        <Image source={{uri: item.image}} style={styles.postImage} resizeMode='contain'></Image>
+        <Image source={{uri: item.image}} style={styles.postImage} resizeMode='cover'></Image>
+        <Text style={styles.textdescription}>{item.description}</Text>
+        <Text style={styles.textprice}>{item.price} DH</Text>     
       </TouchableOpacity>
     </View>
   )
@@ -35,20 +34,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: 'black'
-  }, 
+    color: "black",
+    textAlign: "center",
+    fontSize: 19,
+    fontWeight: "bold"
+  },
+  textdescription: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 14,
+  },
+  textprice: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 17,
+  },
   postImage: {
     width: 200,
     height: 200,
-    borderRadius: 10
+    borderRadius: 0,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginVertical: 10,
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     padding: 10,
     margin: 10,
-    width: '100%'
-  }
+    width: '100%',
+    borderColor: "grey",
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowOffset: { width: 5, height: 13 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 4,
+  },
+
 })

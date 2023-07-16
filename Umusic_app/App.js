@@ -12,13 +12,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-         <Stack.Screen name='Login' options={{headerShown: false}} component={LoginScreen} />
+         <Stack.Screen name='Login' options={{headerShown:false}} component={LoginScreen} />
          <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
-         <Stack.Screen name='ProductPage' component={ProductScreen} options={{headerShown: false}} />
-         <Stack.Screen name='Register' component={RegisterScreen} options={{headerShown: false}} />
-         <Stack.Screen name='MyProducts' component={MyProductsScreen} options={{headerShown: false}} />
-         <Stack.Screen name='MyProfile' component={ProfileScreen} options={{headerShown: false}}  />
-         <Stack.Screen name='EditProfile' component={EditProfileScreen} options={{headerShown: false}}  />
+         <Stack.Screen name='ProductPage' component={ProductScreen} options={{headerShown: true}} />
+         <Stack.Screen name='Register' component={RegisterScreen} options={{headerShown: true}} />
+         <Stack.Screen name='MyProducts' component={MyProductsScreen} options={{headerShown: true}} />
+         <Stack.Screen name='MyProfile' component={ProfileScreen} options={{headerShown: true}}  />
+         <Stack.Screen name='EditProfile' component={EditProfileScreen} options={{headerShown: true}}  />
 
       </Stack.Navigator>
     </NavigationContainer>
