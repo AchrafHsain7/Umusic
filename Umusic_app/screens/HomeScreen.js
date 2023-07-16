@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import { getAuth, signOut } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { ProductPost } from '../components';
+import { ProductPost, SearchOption } from '../components';
 
 
 const HomeScreen = () => {
@@ -86,20 +86,7 @@ useEffect(() => {
         </TouchableOpacity>
       
 
-      <ScrollView horizontal style={styles.optionsContainer} showsHorizontalScrollIndicator={false}>
-        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('piano')}>
-            <Text>Piano</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('guitar')}>
-            <Text>Guitar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('trumpet')}>
-            <Text>Trumpet</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('')}>
-            <Text>All Items</Text>
-        </TouchableOpacity>
-      </ScrollView>
+     <SearchOption searchOption={searchOption} setSearchOption={setSearchOption}  />
 
 
         <FlatList
