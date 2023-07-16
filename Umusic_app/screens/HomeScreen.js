@@ -61,13 +61,7 @@ const HomeScreen = () => {
         
     }
 
-    const handleSignOut = () => {
-        signOut(auth)
-        .then(() => {
-            navigation.replace('Login');
-        })
-        .catch(error => alert(error.message))
-    }
+   
 
 
 useEffect(()=>{
@@ -90,12 +84,7 @@ useEffect(() => {
                 <Text style={styles.profileText}>{userData?.username}</Text>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity
-        style={styles.button}
-        onPress={handleSignOut}
-      >
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
+      
 
       <ScrollView horizontal style={styles.optionsContainer} showsHorizontalScrollIndicator={false}>
         <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('piano')}>
@@ -134,12 +123,6 @@ useEffect(() => {
         onPress={getProductData}
       >
         <Text style={styles.buttonText}>Refresh</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {navigation.navigate('MyProducts')}} 
-      >
-        <Text style={styles.buttonText}>My Products</Text>
       </TouchableOpacity>
     </SafeAreaView> 
   )
