@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
@@ -24,7 +24,7 @@ const MyProductsScreen = () => {
         })
     }
 
-    const getMyProducts = () => {
+    const getMyProducts = async () => {
         const products = []
         if(transactionData === null){
             return null;
@@ -38,6 +38,7 @@ const MyProductsScreen = () => {
             })
         })
         setProductsData(products);
+        calculateTotalPrice();
         console.log('Data: ', productsData)
         }
 
@@ -56,17 +57,19 @@ const MyProductsScreen = () => {
 
 
     useEffect(() => {
-        getMyTransactions()
-        .then(() => calculateTotalPrice())
-        .then(() => getMyProducts())
-        
+        const fetchData = async () => {
+            await getMyTransactions();
+            await getMyProducts()
+            .then(() => {calculateTotalPrice()});
+        }
+        fetchData();
     }, [])  
 
 
 
 
   return (
-    <View style={styles.container} >
+    <SafeAreaView style={styles.container} >
       <Text style={{marginTop: 50}}>MyProductsScreen</Text>
       <FlatList
         data={transactionData}
@@ -105,7 +108,7 @@ const MyProductsScreen = () => {
         </TouchableOpacity>
         <Text>Total Price: {totalPrice} DH</Text>
         
-    </View>
+    </SafeAreaView>
   )
 }
 

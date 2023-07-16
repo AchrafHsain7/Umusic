@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
@@ -67,7 +67,7 @@ export default function RegisterScreen() {
     }, [])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
             <TextInput placeholder='Username' style={styles.input} value={username} onChangeText={text => setUsername(text)} />
             <TextInput placeholder='Email' style={styles.input} value={email} onChangeText={text => setEmail(text)} />
@@ -81,7 +81,7 @@ export default function RegisterScreen() {
                 <Text style={styles.buttonText}> Register </Text>
             </TouchableOpacity>
         </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

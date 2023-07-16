@@ -1,4 +1,4 @@
-import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, ScrollView, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { getAuth, signOut } from 'firebase/auth'
@@ -22,7 +22,7 @@ const HomeScreen = () => {
         const snapshot = await db
           .ref('user')
           .orderByChild('uid')
-          .equalTo(auth.currentUser.uid)
+          .equalTo(auth.currentUser.uid) 
           
       
         const userObject = snapshot.val();
@@ -67,7 +67,7 @@ useEffect(()=>{
 
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.profileContainer}>
             <Image source={{uri: userData?.image}} style={styles.profileImage} ></Image>
             <View style={styles.profileTextContainer}>
@@ -108,7 +108,7 @@ useEffect(()=>{
       >
         <Text style={styles.buttonText}>My Products</Text>
       </TouchableOpacity>
-    </View> 
+    </SafeAreaView> 
   )
 }
 

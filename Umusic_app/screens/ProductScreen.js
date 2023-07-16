@@ -1,16 +1,22 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { getDatabase, onValue, ref, update } from 'firebase/database'
 import { TouchableOpacity } from 'react-native'
 import { auth } from '../firebase'
 import { getAuth } from 'firebase/auth'
+import { ScrollView } from 'react-native'
+import { TextInput } from 'react-native'
+import { FlatList } from 'react-native'
+import { Comment } from '../components'
 
 const ProductScreen = () => {
 
     const [data, setData] = useState({});
     const [Id, setId] = useState(1);
     const [quantity, setQuantity] = useState(0);
+    const [comment, setComment] = useState('');
+    const [commentData, setCommentData] = useState([]) 
 
     const route = useRoute()
     const { id } = route.params;
@@ -27,17 +33,33 @@ const ProductScreen = () => {
         })
     }
 
+    const getComments = () => {
+      const comments = ref(db, `product/${id}/comments/`);
+      onValue(comments, (snapshot) => {
+        const comment_data = snapshot.val();
+        try{
+          setCommentData(Object.values(comment_data));
+        } catch {
+          return
+        }
+        
+        console.log('commentDataNow: ', commentData) 
+      })
+    }  
+
     const getID = () =>{
       const transactions = ref(db, `transaction/${auth.currentUser.uid}/`)
       onValue(transactions, (snapshot) => {
         const data = snapshot.val();
-        console.log('Here',data)
+        //console.log('Here',data)
         if (data === null){
           return
         }
         setId(data.length);
       })
     }
+
+
 
     const buyProduct = () => {
       const transaction = {
@@ -49,19 +71,36 @@ const ProductScreen = () => {
 
       const updates = {};
       const ID = getID();
-      console.log('ID', ID);
+      //console.log('ID', ID);
       updates[`transaction/${auth.currentUser.uid}/${Id}/`] = transaction
 
       return update(ref(db), updates)
     }
 
+
+
+    const addComment = () => {
+        const commentData = {
+          text: comment,
+          date: new Date().toJSON().slice(0, 10),
+          userID: auth.currentUser.uid,
+          product_id: data.id,
+        }
+
+        const updates = {}; 
+        updates[`product/${data.id}/comments/${auth.currentUser.uid}/`] = commentData;
+        update(ref(db), updates); 
+    }
+
+
     useEffect(() => {
         getProduct();
         getID();
+        getComments();
     }, [])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>{data.name}</Text>
       <Image source={{uri: data.image}} style={styles.image} resizeMode='contain'/>
       <Text>Description: {data.description}</Text>
@@ -69,7 +108,11 @@ const ProductScreen = () => {
       <Text>Price: {data.price}</Text>
       <Text>Available Quantity: {data.quantity}</Text>
 
-      <TouchableOpacity 
+
+    <ScrollView style={styles.scrollArea}>
+      <View style={styles.scrollAreaContent}>
+
+    <TouchableOpacity 
         style={styles.button}
         onPress={() => {
           buyProduct();
@@ -101,7 +144,31 @@ const ProductScreen = () => {
           <Text>-</Text>
           </TouchableOpacity>
       </View>
-    </View>
+      
+        <Text>Comments: </Text>
+        <TextInput placeholder='Comment:' style={styles.commentInput}
+          value={comment}
+          onChangeText={(text)=>setComment(text)}
+        />
+        <TouchableOpacity style={styles.button} onPress={addComment}>
+          <Text>Submit</Text>
+        </TouchableOpacity>
+        </View>
+        
+    </ScrollView>
+        <FlatList
+        data={commentData} 
+        renderItem={({ item }) => {
+          console.log('Added')
+          return(
+            <Comment item={item}  /> 
+          )
+        }}
+        contentContainerStyle={{columnGap: 10}}
+        showsVerticalScrollIndicator={false}
+        style={styles.commentList}
+        />
+    </SafeAreaView>
   )
 }
 
@@ -123,7 +190,22 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         borderWidth: 1,
         borderRadius: 10,
-        marginTop: 20,
-    }
+        marginTop: 5,
+    },
+    commentInput: {
+      backgroundColor: 'white',
+      borderWidth: 1,
+      padding: 15,
+      width: '60%'
+    },
+    scrollArea: {
+      width: '100%',
+      padding: 10
+    },
+    scrollAreaContent: {
+      justifyContent: 'center', 
+      alignItems: 'center'
+    },
+   
 
 })

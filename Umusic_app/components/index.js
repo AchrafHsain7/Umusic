@@ -1,5 +1,6 @@
 import ProductPost from './ProductPost';
 import ProductTransaction from './ProductTransaction';
+import Comment from './Comment';
 
 
-export {ProductPost, ProductTransaction};
+export {ProductPost, ProductTransaction, Comment};
