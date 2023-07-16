@@ -17,6 +17,7 @@ const ProductScreen = () => {
     const [quantity, setQuantity] = useState(0);
     const [comment, setComment] = useState('');
     const [commentData, setCommentData] = useState([]) 
+    
 
     const route = useRoute()
     const { id } = route.params;

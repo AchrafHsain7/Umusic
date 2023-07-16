@@ -11,11 +11,14 @@ const SearchOption = ({ searchOption, setSearchOption}) => {
                 <TouchableOpacity style={styles.optionButtonSelected} onPress={() => setSearchOption('piano')}>
                     <Text>Piano</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('guitar')}>
-                    <Text>Guitar</Text>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('string')}>
+                    <Text>String</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('trumpet')}>
-                    <Text>Trumpet</Text>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('brass')}>
+                    <Text>Brass</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('percusion')}>
+                    <Text>Percusion</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('')}>
                     <Text>All Items</Text>
@@ -28,11 +31,14 @@ const SearchOption = ({ searchOption, setSearchOption}) => {
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('piano')}>
                     <Text>Piano</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtonSelected} onPress={() => setSearchOption('guitar')}>
-                    <Text>Guitar</Text>
+                <TouchableOpacity style={styles.optionButtonSelected} onPress={() => setSearchOption('string')}>
+                    <Text>String</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('trumpet')}>
-                    <Text>Trumpet</Text>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('brass')}>
+                    <Text>Brass</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('percusion')}>
+                    <Text>Percusion</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('')}>
                     <Text>All Items</Text>
@@ -45,11 +51,14 @@ const SearchOption = ({ searchOption, setSearchOption}) => {
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('piano')}>
                     <Text>Piano</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('guitar')}>
-                    <Text>Guitar</Text>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('string')}>
+                    <Text>String</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtonSelected} onPress={() => setSearchOption('trumpet')}>
-                    <Text>Trumpet</Text>
+                <TouchableOpacity style={styles.optionButtonSelected} onPress={() => setSearchOption('brass')}>
+                    <Text>Brass</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('percusion')}>
+                    <Text>Percusion</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('')}>
                     <Text>All Items</Text>
@@ -62,11 +71,14 @@ const SearchOption = ({ searchOption, setSearchOption}) => {
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('piano')}>
                     <Text style = {styles.whitetext}>Piano</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('guitar')}>
-                    <Text style = {styles.whitetext}>Guitar</Text>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('string')}>
+                    <Text style = {styles.whitetext}>String</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('trumpet')}>
-                    <Text style = {styles.whitetext}>Trumpet</Text>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('brass')}>
+                    <Text style = {styles.whitetext}>Brass</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('percusion')}>
+                    <Text>Percusion</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.optionButtons} onPress={() => setSearchOption('')}>
                     <Text style = {styles.whitetext}>All Items</Text>
